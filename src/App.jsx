@@ -20,7 +20,7 @@ import {
   ClipboardCheck,
   LineChart,
   Globe,
-  Scale,
+  Scale, 
   CloudSun,
   PlugZap,
 } from "lucide-react";
@@ -80,9 +80,9 @@ const ACCENT_HEX = "#0052fe";
 const PHOTO_URL = "/max.png";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/maxkyrylyuk/";
-const GITHUB_URL = "https://github.com/maxk2107"; // keep for Links section
+const GITHUB_URL = "https://github.com/maxkyrylyuk"; // keep for Links section
 const EMAIL = "maxkyrylyuk06@gmail.com";
-const CV_URL = "https://drive.google.com/file/d/1IrIUCMElBuT97yMOxf4VuMMRNTkLOs9L/view";
+const CV_URL = "https://drive.google.com/file/d/1H_lvkraC9zqWy7ZFqdqej-cSOJPPvEk7/view?usp=sharing";
 
 function NavLink({ href, children }) {
   return (
@@ -483,8 +483,9 @@ export default function App() {
         org: "TET Capital",
         meta: "Sep 2025 – Present",
         bullets: [
-          "Analysed unemployment, interest rates, and inflation to assess macro risk conditions across FX, futures, crypto, oil, and precious metals.",
-          "Translated macro signals into daily investment inputs to support positioning and risk management decisions.",
+          "Analysed macroeconomic indicators to assess systematic risk across multiple asset classes.",
+          "Conducted market research and synthesised insights for investment analysis.",
+          "Prepared internal reports to inform decision making and post analysis review.",
         ],
       },
       {
@@ -492,19 +493,20 @@ export default function App() {
         org: "Coinbase",
         meta: "May 2025 – Aug 2025",
         bullets: [
-          "Built automation to map internal controls to MiCA, ESMA, SOX, and CBI frameworks, enabling real-time gap analysis.",
-          "Supported delivery of payments fraud and DORA audits using Snowflake, Databricks, and Datadog for testing and evidence analysis.",
-          "Created audit workpapers and evidence packs with EMEA and US teams across five Coinbase entities.",
-        ],
+          "Developed an automation workflow to improve internal audit processes by mapping internal controls across 7 regulatory frameworks, enabling structured gap analysis and reducing manual review effort during assessments.",
+          "Supported Compliance and Operational audits, including payments, MiCA, ESMA, DORA, and CBI, by testing control effectiveness and analysing evidence using Snowflake, Databricks, and Datadog.",
+          "Created and maintained detailed audit workpapers and documentation for 5 Coinbase legal entities, clearly describing testing performed, results, and conclusions, and collaborating with EMEA and US teams to support audit delivery and regulatory readiness.",
+          "Selected as one of three EMEA interns for the inaugural programme.",
+        ],  
       },
       {
         role: "Proprietary Trader",
         org: "E8 Markets",
         meta: "Jan 2025 – May 2025",
         bullets: [
-          "Designed and executed rule-based trading strategies across FX and crypto with predefined entry, exit, and risk parameters.",
-          "Achieved ~3% average monthly returns while operating within strict drawdown and leverage constraints.",
-          "Reviewed performance weekly to iterate on rules, risk limits, and execution quality.",
+          "Executed systematic strategies across FX and digital assets within predefined exposure, drawdown, and leverage limits.",
+          "Monitored live market conditions to identify emerging trends and execution issues.",
+          "Reported daily performance and risk metrics (returns, drawdowns, volatility, Sharpe).",
         ],
       },
       {
@@ -610,7 +612,11 @@ export default function App() {
             <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
               <div>
                 <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-                  <span className="text-zinc-950">Systems for finance + risk,</span>
+                  <span className="text-zinc-950">
+                    Systems for<span className="hidden sm:inline"> finance + risk,</span>
+                  </span>
+                  <br className="sm:hidden" />
+                  <span className="text-zinc-950 sm:hidden">finance + risk,</span>
                   <br />
                   <span className="text-zinc-600">executed with analytics and automation.</span>
                 </h1>
