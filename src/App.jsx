@@ -612,13 +612,9 @@ export default function App() {
             <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
               <div>
                 <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-                  <span className="text-zinc-950">
-                    Systems for<span className="hidden sm:inline"> finance + risk,</span>
-                  </span>
-                  <br className="sm:hidden" />
-                  <span className="text-zinc-950 sm:hidden">finance + risk,</span>
+                  <span className="text-zinc-950">Systems for finance + risk,</span>
                   <br />
-                  <span className="text-zinc-600">executed with analytics and automation.</span>
+                  <span className="text-zinc-600">executed with analytics & automation.</span>
                 </h1>
 
                 <p className="mt-5 max-w-xl text-base leading-relaxed text-zinc-600">
