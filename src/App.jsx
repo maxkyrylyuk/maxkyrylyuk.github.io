@@ -614,7 +614,9 @@ export default function App() {
                 <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
                   <span className="text-zinc-950">Systems for finance + risk,</span>
                   <br />
-                  <span className="text-zinc-600">executed with analytics & automation.</span>
+                  <span className="text-zinc-600">
+                    executed with <span className="whitespace-nowrap">analytics &amp; automation</span>.
+                  </span>
                 </h1>
 
                 <p className="mt-5 max-w-xl text-base leading-relaxed text-zinc-600">
