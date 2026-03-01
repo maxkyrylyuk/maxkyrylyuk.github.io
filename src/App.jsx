@@ -481,11 +481,11 @@ export default function App() {
       {
         role: "Investment Analyst Intern",
         org: "TET Capital",
-        meta: "Sep 2025 – Present",
+        meta: "Nov 2025 – Present",
         bullets: [
-          "Analysed macroeconomic indicators to assess systematic risk across multiple asset classes.",
-          "Conducted market research and synthesised insights for investment analysis.",
-          "Prepared internal reports to inform decision making and post analysis review.",
+          "Analyse macroeconomic indicators and cross-asset trends across FX, commodities and futures to form a systematic risk view and investment bias.",
+          "Support systematic strategy research and post-trade review by tracking performance and execution quality, including PnL, exposure, drawdowns, correlation and slippage.",
+          "Built MacroScanner in Python to automate live macro data tracking and event monitoring, and produce concise updates to support ongoing decision making.",
         ],
       },
       {
