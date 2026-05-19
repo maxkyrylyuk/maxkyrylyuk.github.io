@@ -20,9 +20,11 @@ import {
   ClipboardCheck,
   LineChart,
   Globe,
-  Scale, 
+  Scale,
   CloudSun,
   PlugZap,
+  Award,
+  Smartphone,
 } from "lucide-react";
 
 function Card({ className = "", children }) {
@@ -77,12 +79,12 @@ function Separator({ orientation = "horizontal", className = "" }) {
  */
 
 const ACCENT_HEX = "#0052fe";
-const PHOTO_URL = "/max.png";
+const PHOTO_URL = "/profilephoto.jpg";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/maxkyrylyuk/";
 const GITHUB_URL = "https://github.com/maxkyrylyuk"; // keep for Links section
 const EMAIL = "maxkyrylyuk06@gmail.com";
-const CV_URL = "https://drive.google.com/file/d/1H_lvkraC9zqWy7ZFqdqej-cSOJPPvEk7/view?usp=sharing";
+const CV_URL = "https://drive.google.com/file/d/1aP9p6HNpJvXSKiEELe0wgNW30V9G-6o_/view?usp=sharing";
 
 function NavLink({ href, children }) {
   return (
@@ -327,6 +329,7 @@ export default function App() {
       { href: "#about", label: "About" },
       { href: "#projects", label: "Projects" },
       { href: "#experience", label: "Experience" },
+      { href: "#certifications", label: "Certifications" },
       { href: "#links", label: "Resume" },
     ],
     []
@@ -455,21 +458,22 @@ export default function App() {
         links: [],
       },
       {
-        title: "Tax Cash Flow Model",
-        oneLiner: "When tax actually hits cash.",
+        title: "WaitWorth",
+        oneLiner: "Buy now or wait — decided by data.",
         blurb:
-          "Separates accounting tax expense from cash tax paid and models the timing of deferred tax reversals to improve cash flow and valuation accuracy.",
-        tags: ["In Development"],
-        icon: FileText,
+          "A student-focused SaaS concept that turns ~22,000 used-phone listings into a clear buy-now-or-wait recommendation, backed by OLS regression on price drivers and ARIMA forecasts of future resale value.",
+        tags: ["Built"],
+        icon: Smartphone,
 
         details:
-          "Overview\nThe Tax Cash Flow Model focuses on when tax actually impacts cash, rather than when it appears on the income statement.\n\nHow it works\nThe model separates accounting tax expense from cash tax paid and tracks deferred tax assets and liabilities. It explicitly models the timing of reversals to align tax with real cash flows.\n\nWhy it matters\nTax timing materially affects liquidity and valuation. This model improves cash-flow accuracy and avoids misrepresenting economic performance.",
+          "Overview\nWaitWorth is a student-focused SaaS concept that helps users decide whether to buy a used phone now or wait for a lower price. The system turns listing-level data into a structured recommendation rather than a guess, combining a regression view of price drivers with short-horizon ARIMA forecasts.\n\nHow it works\nThe analysis uses a synthetic 22,664-row listing dataset (MSRP, age, condition grade, battery health, storage/RAM, warranty/refurb/carrier flags, seller type, and successor-launch effects) alongside a public Kaggle reference set. Listings are cleaned in-memory — dates parsed, labels standardised, impossible observations removed — and then fed into two engines: an OLS model that explains what drives used price, and an ARIMA pipeline that projects each SKU's monthly average price 5 months ahead.\n\nRegression\nThree OLS specifications are estimated with HC3 robust standard errors, building from a simple depreciation model to a full specification with brand, condition, listing flags, and seller type. Key results from the preferred model:\n- €1 of MSRP → ~€0.59 of used price\n- Each additional month since release → ~€16 lower used price\n- Carrier locking → ~€27 discount\n- A successor-model launch → ~€238 drop in resale value\n\nForecasting\nMonthly average prices for selected iPhone and Galaxy SKUs are tested for stationarity (ADF) and modelled with ARIMA(p,1,q) candidates ranked by AIC/BIC. The chosen model produces 5-step-ahead forecasts with 95% confidence intervals, which are then translated into four product signals: Strong Wait, Moderate Wait, Buy Now / Stable, or Buy Now.\n\nWhy it matters\nA €40 saving on a phone is real money to a student. WaitWorth replaces gut-feel timing with a defensible, repeatable decision framework grounded in actual price behaviour.",
         highlights: [
-          "Clear separation of accounting vs cash tax",
-          "Explicit modelling of deferred tax reversals",
-          "Improved cash flow and valuation accuracy",
+          "22,664-listing dataset cleaned, modelled, and forecast end-to-end in a single notebook",
+          "OLS regression with HC3 robust SE quantifies the impact of age, condition, brand, and listing flags on resale value",
+          "ARIMA forecasts with 95% confidence intervals projected 5 months ahead per SKU",
+          "Forecast outputs converted into clear product signals (Strong Wait → Buy Now)",
         ],
-        stack: ["Tax modelling", "Cash flow analysis", "Financial statements"],
+        stack: ["Python", "pandas", "statsmodels", "OLS regression", "ARIMA forecasting", "matplotlib"],
         links: [],
       },
     ],
@@ -479,13 +483,22 @@ export default function App() {
   const experience = useMemo(
     () => [
       {
+        role: "Sales Consultant",
+        org: "Eir",
+        meta: "Mar 2026 – Present",
+        bullets: [
+          "Managing end-to-end B2B and B2C sales for ~20 customers daily: ID verification, credit/fraud checks, and contract creation across broadband, mobile, and TV. Store key holder responsible for cash reconciliation.",
+          "Consistently hitting weekly KPIs across all product lines, driving recurring revenue through long-term contract acquisition.",
+        ],
+      },
+      {
         role: "Investment Analyst Intern",
         org: "TET Capital",
-        meta: "Nov 2025 – Present",
+        meta: "Nov 2025 – Mar 2026",
         bullets: [
-          "Analyse macroeconomic indicators and cross-asset trends across FX, commodities and futures to form a systematic risk view and investment bias.",
-          "Support systematic strategy research and post-trade review by tracking performance and execution quality, including PnL, exposure, drawdowns, correlation and slippage.",
-          "Built MacroScanner in Python to automate live macro data tracking and event monitoring, and produce concise updates to support ongoing decision making.",
+          "Analysed global macro drivers across G10 FX, commodities, and liquid futures by tracking 8 key indicators; delivered daily memos to help form a systematic risk review and guide asset selection.",
+          "Conducted strategy research and post-trade reviews for ~10 trades per week; used Python and Excel to track PnL, drawdowns, and slippage, helping the team identify and reduce high risk exposure.",
+          "Developed a Python tool MacroScanner to automate daily data tracking across 8 countries; reduced preparation time by 80% (from 15 to 3 minutes), allowing for faster updates and event monitoring.",
         ],
       },
       {
@@ -493,26 +506,16 @@ export default function App() {
         org: "Coinbase",
         meta: "May 2025 – Aug 2025",
         bullets: [
-          "Developed an automation workflow to improve internal audit processes by mapping internal controls across 7 regulatory frameworks, enabling structured gap analysis and reducing manual review effort during assessments.",
-          "Supported Compliance and Operational audits, including payments, MiCA, ESMA, DORA, and CBI, by testing control effectiveness and analysing evidence using Snowflake, Databricks, and Datadog.",
-          "Created and maintained detailed audit workpapers and documentation for 5 Coinbase legal entities, clearly describing testing performed, results, and conclusions, and collaborating with EMEA and US teams to support audit delivery and regulatory readiness.",
-          "Selected as one of three EMEA interns for the inaugural programme.",
-        ],  
-      },
-      {
-        role: "Proprietary Trader",
-        org: "E8 Markets",
-        meta: "Jan 2025 – May 2025",
-        bullets: [
-          "Executed systematic strategies across FX and digital assets within predefined exposure, drawdown, and leverage limits.",
-          "Monitored live market conditions to identify emerging trends and execution issues.",
-          "Reported daily performance and risk metrics (returns, drawdowns, volatility, Sharpe).",
+          "Mapped 1,200+ internal controls across 7 regulatory frameworks (including MiCA, DORA, and CBI); developed an automation that halved manual gap analysis time from 30 to 15 minutes per review.",
+          "Audited control effectiveness for 5 legal entities using Snowflake, Databricks, and SQL to analyse transaction evidence and ensure compliance across payments and operational workflows.",
+          "Prepared 15 detailed audit workpapers in collaboration with US/EMEA teams, contributing to cross-border regulatory oversight and institutional risk mitigation.",
+          "1 of 3 EMEA interns for inaugural program (0.3% global acceptance rate; 89k+ applicants).",
         ],
       },
       {
         role: "Sales Executive",
         org: "DID Electrical",
-        meta: "Sep 2024 – Jan 2025",
+        meta: "Sep 2024 – Feb 2025",
         bullets: [
           "Generated €100k+ in sales within three months through customer consultation and product guidance.",
           "Managed payments, invoicing, and after-sales support in a high-volume retail environment.",
@@ -661,15 +664,15 @@ export default function App() {
                   <div className="rounded-2xl border border-zinc-200 bg-white p-4">
                     <div className="flex flex-wrap items-center justify-start gap-2 text-sm leading-snug text-zinc-700">
                       <MapPin className="h-4 w-4 shrink-0" style={{ color: ACCENT_HEX }} />
-                      <span>Dublin, IE • Open to grad & intern roles</span>
+                      <span>Dublin, IE • Open to opportunities</span>
                     </div>
                   </div>
 
                   <div className="rounded-2xl border border-zinc-200 bg-white p-4">
                     <div className="text-sm font-medium text-zinc-950">Currently</div>
-                    <div className="mt-1 text-sm text-zinc-600">Investment Analyst Intern — TET Capital</div>
+                    <div className="mt-1 text-sm text-zinc-600">Sales Consultant — Eir</div>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {["Macro Research", "Risk Analysis"].map((t) => (
+                      {["KPIs", "KYC Verification"].map((t) => (
                         <span
                           key={t}
                           className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs text-zinc-700"
@@ -802,8 +805,48 @@ export default function App() {
 
         <Divider />
 
+        {/* Certifications */}
+        <Section id="certifications" tone="white">
+          <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
+                <div className="grid h-10 w-10 place-items-center rounded-2xl border border-zinc-200 bg-white">
+                  <Award className="h-5 w-5" style={{ color: ACCENT_HEX }} />
+                </div>
+                Certifications
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm text-zinc-600">
+              <div className="grid gap-3 sm:grid-cols-3">
+                {[
+                  { name: "Python Data Associate", issuer: "DataCamp" },
+                  { name: "Advanced SQL", issuer: "HackerRank" },
+                  { name: "MA & IB Accelerator", issuer: "AmplifyME" },
+                ].map((c) => (
+                  <div
+                    key={`${c.name}-${c.issuer}`}
+                    className="rounded-2xl border border-zinc-200 bg-white p-4"
+                  >
+                    <div className="font-semibold text-zinc-950">{c.name}</div>
+                    <div className="mt-1 text-sm text-zinc-600">{c.issuer}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-2xl border border-zinc-200 bg-white p-4">
+                <p>
+                  60+ additional certifications in Python, SQL, Data Analytics, Microsoft 365, and Risk via{" "}
+                  <span className="text-zinc-950">Kubicle</span> &amp;{" "}
+                  <span className="text-zinc-950">LinkedIn Learning</span>.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </Section>
+
+        <Divider />
+
         {/* BOOKS (new) */}
-        <Section id="books" tone="white">
+        <Section id="books" tone="soft">
           <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
@@ -849,7 +892,7 @@ export default function App() {
         <Divider />
 
         {/* Links (separate from Education) */}
-        <Section id="links" tone="soft">
+        <Section id="links" tone="white">
           <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
