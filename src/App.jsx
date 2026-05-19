@@ -163,7 +163,7 @@ function CertificationsCard({ className = "" }) {
                 <img
                   src={c.logo}
                   alt={`${c.issuer} logo`}
-                  className="h-full w-auto max-w-[140px] object-contain object-left"
+                  className="max-h-full w-auto max-w-full object-contain object-left"
                 />
               </div>
               <div className="mt-3 font-semibold text-zinc-950">{c.name}</div>
@@ -176,7 +176,7 @@ function CertificationsCard({ className = "" }) {
             <img
               src="/logos/kubicle.svg"
               alt="Kubicle logo"
-              className="h-full w-auto max-w-[140px] object-contain object-left"
+              className="max-h-full w-auto max-w-full object-contain object-left"
             />
           </div>
           <p className="mt-3">
@@ -767,7 +767,7 @@ export default function App() {
             </CardHeader>
             <CardContent className="text-sm leading-relaxed text-zinc-600">
               <p>
-                I’m Max, an Accounting & Finance student with a systems mindset. I’m interested in how markets, businesses, and
+                I’m Max, a recent Accounting & Finance graduate with a systems mindset. I’m interested in how markets, businesses, and
                 incentives interact, and I like turning messy information into clear, usable decisions.
               </p>
               <p className="mt-4">
