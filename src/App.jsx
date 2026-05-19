@@ -118,22 +118,75 @@ function OutlineButton({ children, ...props }) {
   );
 }
 
-function Section({ id, tone = "white", children }) {
+function Section({ id, tone = "white", className = "", children }) {
   const bg = tone === "soft" ? "bg-zinc-50" : "bg-white";
   return (
-    <section id={id} className={`scroll-mt-24 ${bg} py-14 sm:py-16`}>
+    <section id={id} className={`scroll-mt-24 ${bg} py-14 sm:py-16 ${className}`}>
       <div className="mx-auto max-w-6xl px-4">{children}</div>
     </section>
   );
 }
 
-function Divider() {
+function Divider({ className = "" }) {
   return (
-    <div className="bg-white">
+    <div className={`bg-white ${className}`}>
       <div className="mx-auto max-w-6xl px-4">
         <div className="h-px w-full bg-zinc-200" />
       </div>
     </div>
+  );
+}
+
+function CertificationsCard({ className = "" }) {
+  return (
+    <Card className={`rounded-2xl border-zinc-200 bg-white shadow-sm ${className}`}>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
+          <div className="grid h-10 w-10 place-items-center rounded-2xl border border-zinc-200 bg-white">
+            <Award className="h-5 w-5" style={{ color: ACCENT_HEX }} />
+          </div>
+          Certifications
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3 text-sm text-zinc-600">
+        <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+          {[
+            { name: "Python Data Associate", issuer: "DataCamp", logo: "/logos/datacamp.svg" },
+            { name: "Advanced SQL", issuer: "HackerRank", logo: "/logos/hackerrank.svg" },
+            { name: "MA & IB Accelerator", issuer: "AmplifyME", logo: "/logos/amplifyme.svg" },
+          ].map((c) => (
+            <div
+              key={`${c.name}-${c.issuer}`}
+              className="rounded-2xl border border-zinc-200 bg-white p-4"
+            >
+              <div className="h-7 flex items-center">
+                <img
+                  src={c.logo}
+                  alt={`${c.issuer} logo`}
+                  className="h-full w-auto max-w-[140px] object-contain object-left"
+                />
+              </div>
+              <div className="mt-3 font-semibold text-zinc-950">{c.name}</div>
+              <div className="mt-1 text-sm text-zinc-600">{c.issuer}</div>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-2xl border border-zinc-200 bg-white p-4">
+          <div className="h-7 flex items-center">
+            <img
+              src="/logos/kubicle.svg"
+              alt="Kubicle logo"
+              className="h-full w-auto max-w-[140px] object-contain object-left"
+            />
+          </div>
+          <p className="mt-3">
+            60+ additional certifications in Python, SQL, Data Analytics, Microsoft 365, and Risk via{" "}
+            <span className="text-zinc-950">Kubicle</span> &amp;{" "}
+            <span className="text-zinc-950">LinkedIn Learning</span>.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -259,14 +312,18 @@ function ProjectModal({ project, onClose }) {
             </div>
           ) : null}
 
-          {project.image ? (
-            <div className="rounded-2xl border border-zinc-200 bg-white p-3">
-              <img
-                src={project.image}
-                alt={`${project.title} example output`}
-                className="w-full max-h-[380px] object-contain rounded-xl bg-zinc-50"
-              />
-              <div className="mt-2 text-xs text-zinc-500">Output from the {project.title}.</div>
+          {(project.images?.length || project.image) ? (
+            <div className="space-y-3">
+              {(project.images?.length ? project.images : [project.image]).map((src, i) => (
+                <div key={i} className="rounded-2xl border border-zinc-200 bg-white p-3">
+                  <img
+                    src={src}
+                    alt={`${project.title} example output ${i + 1}`}
+                    className="w-full max-h-[380px] object-contain rounded-xl bg-zinc-50"
+                  />
+                  <div className="mt-2 text-xs text-zinc-500">Output from the {project.title}.</div>
+                </div>
+              ))}
             </div>
           ) : null}
 
@@ -402,7 +459,7 @@ export default function App() {
         oneLiner: "Instant macro comparisons.",
         blurb:
           "A lightweight macro scanner that scrapes public data sources (no paid APIs) to standardise key indicators and enable fast, side-by-side country/asset comparisons. Designed to evolve into scoring and forward-looking regime/strength modelling.",
-        tags: ["Prototype"],
+        tags: ["Built"],
         icon: Globe,
         image: "/macro.png",
         details:
@@ -419,6 +476,26 @@ export default function App() {
           "Tables & dashboards",
           "Extensible indicator library",
         ],
+        links: [],
+      },
+      {
+        title: "WaitWorth",
+        oneLiner: "Buy now or wait — decided by data.",
+        blurb:
+          "A student-focused SaaS concept that turns ~22,000 used-phone listings into a clear buy-now-or-wait recommendation, backed by OLS regression on price drivers and ARIMA forecasts of future resale value.",
+        tags: ["Built"],
+        icon: Smartphone,
+        images: ["/wait1.png", "/wait2.png"],
+
+        details:
+          "Overview\nWaitWorth is a student-focused SaaS concept that helps users decide whether to buy a used phone now or wait for a lower price. The system turns listing-level data into a structured recommendation rather than a guess, combining a regression view of price drivers with short-horizon ARIMA forecasts.\n\nHow it works\nThe analysis uses a synthetic 22,664-row listing dataset (MSRP, age, condition grade, battery health, storage/RAM, warranty/refurb/carrier flags, seller type, and successor-launch effects) alongside a public Kaggle reference set. Listings are cleaned in-memory — dates parsed, labels standardised, impossible observations removed — and then fed into two engines: an OLS model that explains what drives used price, and an ARIMA pipeline that projects each SKU's monthly average price 5 months ahead.\n\nRegression\nThree OLS specifications are estimated with HC3 robust standard errors, building from a simple depreciation model to a full specification with brand, condition, listing flags, and seller type. Key results from the preferred model:\n- €1 of MSRP → ~€0.59 of used price\n- Each additional month since release → ~€16 lower used price\n- Carrier locking → ~€27 discount\n- A successor-model launch → ~€238 drop in resale value\n\nForecasting\nMonthly average prices for selected iPhone and Galaxy SKUs are tested for stationarity (ADF) and modelled with ARIMA(p,1,q) candidates ranked by AIC/BIC. The chosen model produces 5-step-ahead forecasts with 95% confidence intervals, which are then translated into four product signals: Strong Wait, Moderate Wait, Buy Now / Stable, or Buy Now.\n\nWhy it matters\nA €40 saving on a phone is real money to a student. WaitWorth replaces gut-feel timing with a defensible, repeatable decision framework grounded in actual price behaviour.",
+        highlights: [
+          "22,664-listing dataset cleaned, modelled, and forecast end-to-end in a single notebook",
+          "OLS regression with HC3 robust SE quantifies the impact of age, condition, brand, and listing flags on resale value",
+          "ARIMA forecasts with 95% confidence intervals projected 5 months ahead per SKU",
+          "Forecast outputs converted into clear product signals (Strong Wait → Buy Now)",
+        ],
+        stack: ["Python", "pandas", "statsmodels", "OLS regression", "ARIMA forecasting", "matplotlib"],
         links: [],
       },
       {
@@ -457,25 +534,6 @@ export default function App() {
         stack: ["Financial modelling", "DCF analysis", "Forecasting logic"],
         links: [],
       },
-      {
-        title: "WaitWorth",
-        oneLiner: "Buy now or wait — decided by data.",
-        blurb:
-          "A student-focused SaaS concept that turns ~22,000 used-phone listings into a clear buy-now-or-wait recommendation, backed by OLS regression on price drivers and ARIMA forecasts of future resale value.",
-        tags: ["Built"],
-        icon: Smartphone,
-
-        details:
-          "Overview\nWaitWorth is a student-focused SaaS concept that helps users decide whether to buy a used phone now or wait for a lower price. The system turns listing-level data into a structured recommendation rather than a guess, combining a regression view of price drivers with short-horizon ARIMA forecasts.\n\nHow it works\nThe analysis uses a synthetic 22,664-row listing dataset (MSRP, age, condition grade, battery health, storage/RAM, warranty/refurb/carrier flags, seller type, and successor-launch effects) alongside a public Kaggle reference set. Listings are cleaned in-memory — dates parsed, labels standardised, impossible observations removed — and then fed into two engines: an OLS model that explains what drives used price, and an ARIMA pipeline that projects each SKU's monthly average price 5 months ahead.\n\nRegression\nThree OLS specifications are estimated with HC3 robust standard errors, building from a simple depreciation model to a full specification with brand, condition, listing flags, and seller type. Key results from the preferred model:\n- €1 of MSRP → ~€0.59 of used price\n- Each additional month since release → ~€16 lower used price\n- Carrier locking → ~€27 discount\n- A successor-model launch → ~€238 drop in resale value\n\nForecasting\nMonthly average prices for selected iPhone and Galaxy SKUs are tested for stationarity (ADF) and modelled with ARIMA(p,1,q) candidates ranked by AIC/BIC. The chosen model produces 5-step-ahead forecasts with 95% confidence intervals, which are then translated into four product signals: Strong Wait, Moderate Wait, Buy Now / Stable, or Buy Now.\n\nWhy it matters\nA €40 saving on a phone is real money to a student. WaitWorth replaces gut-feel timing with a defensible, repeatable decision framework grounded in actual price behaviour.",
-        highlights: [
-          "22,664-listing dataset cleaned, modelled, and forecast end-to-end in a single notebook",
-          "OLS regression with HC3 robust SE quantifies the impact of age, condition, brand, and listing flags on resale value",
-          "ARIMA forecasts with 95% confidence intervals projected 5 months ahead per SKU",
-          "Forecast outputs converted into clear product signals (Strong Wait → Buy Now)",
-        ],
-        stack: ["Python", "pandas", "statsmodels", "OLS regression", "ARIMA forecasting", "matplotlib"],
-        links: [],
-      },
     ],
     []
   );
@@ -487,7 +545,7 @@ export default function App() {
         org: "Eir",
         meta: "Mar 2026 – Present",
         bullets: [
-          "Managing end-to-end B2B and B2C sales for ~20 customers daily: ID verification, credit/fraud checks, and contract creation across broadband, mobile, and TV. Store key holder responsible for cash reconciliation.",
+          "Managing end-to-end B2B and B2C sales: ID verification, credit/fraud checks, and contract creation across broadband, mobile, and TV. Store key holder responsible for cash reconciliation.",
           "Consistently hitting weekly KPIs across all product lines, driving recurring revenue through long-term contract acquisition.",
         ],
       },
@@ -766,87 +824,59 @@ export default function App() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
-                  <div className="grid h-10 w-10 place-items-center rounded-2xl border border-zinc-200 bg-white">
-                    <GraduationCap className="h-5 w-5" style={{ color: ACCENT_HEX }} />
-                  </div>
-                  Education
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm text-zinc-600">
-                <div className="rounded-2xl border border-zinc-200 bg-white p-4">
-                  <div className="font-semibold text-zinc-950">Dublin City University</div>
-                  <div className="mt-1">Bachelor's — Accounting and Finance</div>
+            <div className="flex flex-col gap-6">
+              <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
+                    <div className="grid h-10 w-10 place-items-center rounded-2xl border border-zinc-200 bg-white">
+                      <GraduationCap className="h-5 w-5" style={{ color: ACCENT_HEX }} />
+                    </div>
+                    Education
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm text-zinc-600">
+                  <div className="rounded-2xl border border-zinc-200 bg-white p-4">
+                    <div className="font-semibold text-zinc-950">Dublin City University</div>
+                    <div className="mt-1">Bachelor's — Accounting and Finance</div>
 
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {["Financial Accounting", "Corporate Finance", "Econometrics"].map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs text-zinc-700"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {["Financial Accounting", "Corporate Finance", "Econometrics"].map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs text-zinc-700"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
 
-                  <div className="mt-3 text-xs text-zinc-500">Sep 2023 – May 2026</div>
-                </div>
-                <div className="rounded-2xl border border-zinc-200 bg-white p-4">
-                  <div className="font-semibold text-zinc-950">Kingswood College</div>
-                  <div className="mt-1">Leaving Certificate Established</div>
-                  <div className="mt-1 text-xs text-zinc-500">Sep 2018 – Jun 2023</div>
-                </div>
-              </CardContent>
-            </Card>
+                    <div className="mt-3 text-xs text-zinc-500">Sep 2023 – May 2026</div>
+                  </div>
+                  <div className="rounded-2xl border border-zinc-200 bg-white p-4">
+                    <div className="font-semibold text-zinc-950">Kingswood College</div>
+                    <div className="mt-1">Leaving Certificate Established</div>
+                    <div className="mt-1 text-xs text-zinc-500">Sep 2018 – Jun 2023</div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Certifications inline on desktop only */}
+              <CertificationsCard className="hidden lg:block" />
+            </div>
           </div>
         </Section>
 
-        <Divider />
+        <Divider className="lg:hidden" />
 
-        {/* Certifications */}
-        <Section id="certifications" tone="white">
-          <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
-                <div className="grid h-10 w-10 place-items-center rounded-2xl border border-zinc-200 bg-white">
-                  <Award className="h-5 w-5" style={{ color: ACCENT_HEX }} />
-                </div>
-                Certifications
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm text-zinc-600">
-              <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  { name: "Python Data Associate", issuer: "DataCamp" },
-                  { name: "Advanced SQL", issuer: "HackerRank" },
-                  { name: "MA & IB Accelerator", issuer: "AmplifyME" },
-                ].map((c) => (
-                  <div
-                    key={`${c.name}-${c.issuer}`}
-                    className="rounded-2xl border border-zinc-200 bg-white p-4"
-                  >
-                    <div className="font-semibold text-zinc-950">{c.name}</div>
-                    <div className="mt-1 text-sm text-zinc-600">{c.issuer}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="rounded-2xl border border-zinc-200 bg-white p-4">
-                <p>
-                  60+ additional certifications in Python, SQL, Data Analytics, Microsoft 365, and Risk via{" "}
-                  <span className="text-zinc-950">Kubicle</span> &amp;{" "}
-                  <span className="text-zinc-950">LinkedIn Learning</span>.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Certifications — standalone section on mobile/tablet only */}
+        <Section id="certifications" tone="white" className="lg:hidden">
+          <CertificationsCard />
         </Section>
 
         <Divider />
 
         {/* BOOKS (new) */}
-        <Section id="books" tone="soft">
+        <Section id="books" tone="soft" className="lg:bg-white">
           <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
@@ -892,7 +922,7 @@ export default function App() {
         <Divider />
 
         {/* Links (separate from Education) */}
-        <Section id="links" tone="white">
+        <Section id="links" tone="white" className="lg:bg-zinc-50">
           <Card className="rounded-2xl border-zinc-200 bg-white shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-xl text-zinc-950">
