@@ -84,7 +84,7 @@ const PHOTO_URL = "/profilephoto.jpg";
 const LINKEDIN_URL = "https://www.linkedin.com/in/maxkyrylyuk/";
 const GITHUB_URL = "https://github.com/maxkyrylyuk"; // keep for Links section
 const EMAIL = "maxkyrylyuk06@gmail.com";
-const CV_URL = "https://drive.google.com/file/d/1aP9p6HNpJvXSKiEELe0wgNW30V9G-6o_/view?usp=sharing";
+const CV_URL = "https://drive.google.com/file/d/1rHPHrfNNY2vxdaQBmVGi82irvN7V07j5/view?usp=sharing";
 
 function NavLink({ href, children }) {
   return (
@@ -541,12 +541,11 @@ export default function App() {
   const experience = useMemo(
     () => [
       {
-        role: "Sales Consultant",
-        org: "Eir",
-        meta: "Mar 2026 – Present",
+        role: "LDP Analyst",
+        org: "ION Group",
+        meta: "Sep 2026 – Present",
         bullets: [
-          "Managing end-to-end B2B and B2C sales: ID verification, credit/fraud checks, and contract creation across broadband, mobile, and TV. Store key holder responsible for cash reconciliation.",
-          "Consistently hitting weekly KPIs across all product lines, driving recurring revenue through long-term contract acquisition.",
+          "Leadership Development Programme.",
         ],
       },
       {
@@ -554,9 +553,9 @@ export default function App() {
         org: "TET Capital",
         meta: "Nov 2025 – Mar 2026",
         bullets: [
-          "Analysed global macro drivers across G10 FX, commodities, and liquid futures by tracking 8 key indicators; delivered daily memos to help form a systematic risk review and guide asset selection.",
-          "Conducted strategy research and post-trade reviews for ~10 trades per week; used Python and Excel to track PnL, drawdowns, and slippage, helping the team identify and reduce high risk exposure.",
-          "Developed a Python tool MacroScanner to automate daily data tracking across 8 countries; reduced preparation time by 80% (from 15 to 3 minutes), allowing for faster updates and event monitoring.",
+          "Produced 60 macro memos over 5 months across G10 FX, oil, gold and futures, presenting trade ideas and data analysis daily to inform risk positioning on a $30M AUM book.",
+          "Executed trades independently on a dedicated allocation, generating positive PnL, scoping ±8 positions daily off CPI, PMI, unemployment and rates data.",
+          "Built MacroScanner, a Python tool pulling live TradingEconomics data across 8 countries, cutting daily prep from 15 minutes to 3 and adopted by 3 team members.",
         ],
       },
       {
@@ -564,19 +563,25 @@ export default function App() {
         org: "Coinbase",
         meta: "May 2025 – Aug 2025",
         bullets: [
-          "Mapped 1,200+ internal controls across 7 regulatory frameworks (including MiCA, DORA, and CBI); developed an automation that halved manual gap analysis time from 30 to 15 minutes per review.",
-          "Audited control effectiveness for 5 legal entities using Snowflake, Databricks, and SQL to analyse transaction evidence and ensure compliance across payments and operational workflows.",
-          "Prepared 15 detailed audit workpapers in collaboration with US/EMEA teams, contributing to cross-border regulatory oversight and institutional risk mitigation.",
-          "1 of 3 EMEA interns for inaugural program (0.3% global acceptance rate; 89k+ applicants).",
+          "Identified a high-risk control finding that led to a remediation implementation, audited control effectiveness across 5 legal entities, multiple jurisdictions using Snowflake, Databricks and SQL; prepared 15 workpapers.",
+          "Presented findings to IA management throughout the internship and delivered a final review to 20+ stakeholders; selected as 1 of 3 EMEA interns for the inaugural programme (89k+ applicants).",
+          "Built Spark42, a Python automation with a full UI and matching engine mapping internal controls across 7 regulatory frameworks (MiCA, DORA, CBI), cutting mapping time from 25 to 5 minutes per review and adopted by 5 users across Operations, Treasury and Internal Audit.",
         ],
       },
       {
-        role: "Sales Executive",
+        role: "Sales Consultant",
+        org: "Eir",
+        meta: "Mar 2026 – Aug 2026",
+        bullets: [
+          "Pitched, negotiated and closed 20+ B2B/B2C contracts daily across broadband, mobile and TV, ID/credit/fraud verification inclusive of KYC and full contract paperwork, consistently exceeding weekly KPIs; store key holder; responsible for daily cash reconciliation.",
+        ],
+      },
+      {
+        role: "Sales Consultant",
         org: "DID Electrical",
         meta: "Sep 2024 – Feb 2025",
         bullets: [
-          "Generated €100k+ in sales within three months through customer consultation and product guidance.",
-          "Managed payments, invoicing, and after-sales support in a high-volume retail environment.",
+          "Generated €100,000+ sales in 3 months, managed invoicing, warranty claims and after sales support.",
         ],
       },
     ],
@@ -715,30 +720,20 @@ export default function App() {
                     </div>
                     <div>
                       <div className="text-lg font-semibold">Max Kyrylyuk</div>
-                      <div className="text-sm text-zinc-600">Risk / Finance</div>
+                      <div className="text-sm text-zinc-600">Finance</div>
                     </div>
                   </div>
 
                   <div className="rounded-2xl border border-zinc-200 bg-white p-4">
                     <div className="flex flex-wrap items-center justify-start gap-2 text-sm leading-snug text-zinc-700">
                       <MapPin className="h-4 w-4 shrink-0" style={{ color: ACCENT_HEX }} />
-                      <span>Dublin, IE • Open to opportunities</span>
+                      <span>Dublin, IE</span>
                     </div>
                   </div>
 
                   <div className="rounded-2xl border border-zinc-200 bg-white p-4">
                     <div className="text-sm font-medium text-zinc-950">Currently</div>
-                    <div className="mt-1 text-sm text-zinc-600">Sales Consultant — Eir</div>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {["KPIs", "KYC Verification"].map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs text-zinc-700"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <div className="mt-1 text-sm text-zinc-600">LDP Analyst — ION</div>
                   </div>
 
                   <PrimaryButton className="w-full" asChild>
@@ -767,12 +762,14 @@ export default function App() {
             </CardHeader>
             <CardContent className="text-sm leading-relaxed text-zinc-600">
               <p>
-                I’m Max, a recent Accounting & Finance graduate with a systems mindset. I’m interested in how markets, businesses, and
-                incentives interact, and I like turning messy information into clear, usable decisions.
+                I’m Max, a Rotational Analyst at ION Group on the Leadership Development Programme, with a Bachelor’s in
+                Accounting &amp; Finance from Dublin City University. Previously Investment Analyst at TET Capital and
+                Internal Audit at Coinbase, with a complementary sales background.
               </p>
               <p className="mt-4">
-                I build practical tools across macro research, risk analysis, and automation - from decision tables and dashboards
-                to repeatable workflows that reduce noise and improve consistency.
+                I have a systems mindset, interested in how markets, businesses, and incentives interact, and I like
+                turning messy information into clear, usable decisions. I build practical tools across macro research,
+                audit automation, and trading systems — mostly in Python.
               </p>
             </CardContent>
           </Card>
